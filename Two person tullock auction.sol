@@ -99,6 +99,15 @@ contract Auction {
     function collectPrize() public {
         require(auctionState == State.Cancelled, "auction is still on");
         require(msg.sender == highestBidder, "Hey, you are not the highest bidder");
+        require(highestBid > 0, "You have already claimed the prize");
         payable(msg.sender).transfer(winningPrize);
+        highestBid = 0; //otherwise highest bidder can drain the contract balance
+    }
+    
+    function startAuction() public payable Owner {
+        //Start a new auction
+        require(auctionState == State.Cancelled, "Auction is already on");
+        winningPrize = msg.value;
+        auctionState = State.Running;
     }
 }
