@@ -24,7 +24,7 @@ contract Auction {
         owner = payable(msg.sender);
         auctionState = State.Cancelled;
         startBlock = 0;
-        endBlock = 0; //block time of eth mainet is 15 sec avg so calculate accordingly 1min = 4blocks
+        endBlock = 0; //block time of eth mainet is 15 sec avg so calculate accordingly 1min = 4blocks for other chain calculate accordingly
         bidIncrement = 1000000000000000; //wei 0.001 eth
         highestBid = 0;
         secondHighestBid = 0;
