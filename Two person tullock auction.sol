@@ -20,12 +20,11 @@ contract Auction {
     mapping(address=> uint) public bids;
     uint bidIncrement;
 
-    constructor () payable {
-        winningPrize = msg.value;
+    constructor () {
         owner = payable(msg.sender);
-        auctionState = State.Running;
-        startBlock = block.number;
-        endBlock = startBlock + 40320; //block time of eth mainet is 15 sec avg so calculate accordingly 1min = 4blocks
+        auctionState = State.Cancelled;
+        startBlock = 0;
+        endBlock = 0; //block time of eth mainet is 15 sec avg so calculate accordingly 1min = 4blocks
         bidIncrement = 1000000000000000; //wei 0.001 eth
         highestBid = 0;
         secondHighestBid = 0;
@@ -109,5 +108,7 @@ contract Auction {
         require(auctionState == State.Cancelled, "Auction is already on");
         winningPrize = msg.value;
         auctionState = State.Running;
+        startBlock = block.number;
+        endBlock = startBlock + 40320;
     }
 }
